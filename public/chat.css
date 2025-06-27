@@ -1,0 +1,12 @@
+#chat-modal.hidden { display: none; }
+#chat-modal .overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+}
+#chat-modal .modal {
+  position: fixed; bottom: 10%; right: 10%;
+  width: 300px; background: #fff; border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+#chat-window { height: 200px; overflow-y: auto; padding: 1em; }
+.message.user { text-align: right; }
+.message.bot { text-align: left; }

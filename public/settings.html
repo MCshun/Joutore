@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>スコア設定 | 上トレ！</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="settings.css" />
+</head>
+<body>
+  <!-- ヘッダー -->
+  <!-- header.pugまたはindex.htmlに入れる -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+  <!-- コンテンツ本体 -->
+  <div class="settings-wrapper">
+    <div class="settings-card">
+      <h1>トレンドスコア設定</h1>
+      <p class="score-description">
+        各指標に対して -10〜10 の範囲でスコアを設定してください。<br>
+        正の値は上昇トレンドを強く評価し、負の値は下降トレンドとして評価します。
+      </p>
+      <!-- settings.html の適当な場所に追加 -->
+      <div class="preset-control">
+        <label for="presetSelect">プリセット：</label>
+        <select id="presetSelect" class="preset-select">
+          <option value="balanced" selected>⚖️ バランス型（標準）</option>
+          <option value="trend">📈 トレンド重視型</option>
+          <option value="reversal">🔄 逆張り型</option>
+          <option value="longterm">⏳ 中長期型</option>
+        </select>
+      </div>
+
+
+
+      
+      <form id="scoreForm">
+        <input type="hidden" name="stock_id" value="1" />
+
+        <!-- 一目均衡表 -->
+        <h2>【一目均衡表】</h2>
+        <div class="form-group">
+          <label>転換線 > 基準線</label>
+          <input type="number" name="tenkan_kijun_score" id="tenkan_kijun_score" required>
+        </div>
+        <div class="form-group">
+          <label>遅行線 > ローソク足</label>
+          <input type="number" name="chikou_candle_score" id="chikou_candle_score" required>
+        </div>
+        <div class="form-group">
+          <label>現在値 > 雲（上限）</label>
+          <input type="number" name="price_above_kumo_score" id="price_above_kumo_score" required>
+        </div>
+
+        <!-- 移動平均線 -->
+        <h2>【移動平均線】</h2>
+        <div class="form-group">
+          <label>ゴールデンクロス発生</label>
+          <input type="number" name="golden_cross_score" id="golden_cross_score" required>
+        </div>
+        <div class="form-group">
+          <label>デッドクロス発生</label>
+          <input type="number" name="dead_cross_score" id="dead_cross_score" required>
+        </div>
+        <div class="form-group">
+          <label>ローソク足が移動平均線より上</label>
+          <input type="number" name="price_above_ma_score" id="price_above_ma_score" required>
+        </div>
+        <div class="form-group">
+          <label>ローソク足が移動平均線より下</label>
+          <input type="number" name="price_below_ma_score" id="price_below_ma_score" required>
+        </div>
+
+        <!-- ボリンジャーバンド -->
+        <h2>【ボリンジャーバンド】</h2>
+        <div class="form-group">
+          <label>上限バンドを上抜け</label>
+          <input type="number" name="bb_break_upper_score" id="bb_break_upper_score" required>
+        </div>
+        <div class="form-group">
+          <label>下限バンドを下抜け</label>
+          <input type="number" name="bb_break_lower_score" id="bb_break_lower_score" required>
+        </div>
+
+        <!-- RSI -->
+        <h2>【RSI】</h2>
+        <div class="form-group">
+          <label>RSI > 70</label>
+          <input type="number" name="rsi_over70_score" id="rsi_over70_score" required>
+        </div>
+        <div class="form-group">
+          <label>RSI < 30</label>
+          <input type="number" name="rsi_under30_score" id="rsi_under30_score" required>
+        </div>
+
+        <!-- MACD -->
+        <h2>【MACD】</h2>
+        <div class="form-group">
+          <label>MACD > シグナルライン</label>
+          <input type="number" name="macd_above_signal_score" id="macd_above_signal_score" required>
+        </div>
+        <div class="form-group">
+          <label>MACD < シグナルライン</label>
+          <input type="number" name="macd_below_signal_score" id="macd_below_signal_score" required>
+        </div>
+
+        <button type="submit" class="save-btn">保存</button>
+      </form>
+      <div id="saveResult" class="save-result"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <script src="settings-client.js"></script>
+  <script src="user-info.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+</html>

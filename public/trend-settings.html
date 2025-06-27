@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>トレンド判定しきい値設定 | 上トレ！</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="settings.css" />
+  <link rel="stylesheet" href="trend-settings.css" />
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+  <!-- コンテンツ本体 -->
+  <div class="settings-wrapper">
+    <div class="settings-card">
+      <h1>トレンド判定しきい値設定</h1>
+      <p class="score-description">
+        スコアが <strong>しきい値以上</strong> ⇒ 上昇トレンド<br>
+        スコアが <strong>しきい値以下</strong> ⇒ 下降トレンド<br>
+        それ以外 ⇒ 横ばいトレンド
+      </p>
+      
+      <form id="trendForm">
+        <!-- ユーザー単位の設定なので hidden input は不要です -->
+
+        <div class="form-group">
+          <label for="threshold_rising">上昇トレンドしきい値</label>
+          <input
+            type="number"
+            name="threshold_rising"
+            id="threshold_rising"
+            step="1"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="threshold_falling">下降トレンドしきい値</label>
+          <input
+            type="number"
+            name="threshold_falling"
+            id="threshold_falling"
+            step="1"
+            required
+          />
+        </div>
+
+        <button type="submit" class="save-btn">保存</button>
+      </form>
+
+      <div id="saveResult" class="save-result"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <!-- クライアント処理 -->
+  <script src="user-info.js"></script>
+  <script src="trend-settings-client.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+      btn.addEventListener("click", () => nav.classList.toggle("active"));
+    });
+  </script>
+</body>
+</html>
+
+

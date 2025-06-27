@@ -1,0 +1,45 @@
+/* trend-settings.css */
+
+.form-grid {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #006bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #0056d6;
+}
+
+.save-result {
+  margin-top: 0.8rem;
+  text-align: center;
+}
+
+.score-description {
+  text-align: center;
+  margin-bottom: 1.5rem; /* お好みの余白サイズに調整してください */
+}

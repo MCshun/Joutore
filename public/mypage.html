@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>マイページ</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mypage.css">
+</head>
+<body>
+  <!-- ヘッダー（共通パーツを使っているならここに入れてもOK） -->
+  <!-- header.pugまたはindex.htmlに入れる -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+  <main>
+    <div class="mypage-container">
+      <h1>マイページ修正</h1>
+      <p>こんにちは、<span id="usernameDisplay"></span>さん！</p>
+
+      <form id="editForm">
+        <label>ユーザー名:</label>
+        <input type="text" id="username" required>
+
+        <label>メールアドレス:</label>
+        <input type="email" id="email" required>
+
+        <label>新しいパスワード（空欄なら変更なし）:</label>
+        <input type="password" id="password">
+
+        <label>新しいパスワード（確認）:</label>
+        <input type="password" id="passwordConfirm">
+
+
+        <button type="submit">保存</button>
+      </form>
+
+      <div id="updateResult"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+
+  <script src="user-info.js"></script>
+  <script src="mypage.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+</html>
+

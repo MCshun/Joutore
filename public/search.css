@@ -1,0 +1,32 @@
+.favorite-btn {
+  background-color: #ffcc00;
+  color: #333;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+.favorite-btn:hover {
+  background-color: #ffdd33;
+  transform: scale(1.05);
+}
+
+.favorite-btn:active {
+  transform: scale(0.95);
+}
+
+/* 既存の .favorite-btn.favorited より後に書いてください */
+.favorite-btn.favorited {
+  /* 見た目だけ「登録済み」にしたい場合は色だけ残す */
+  background-color: #ccc;
+  color: #555;
+
+  /* ここでカーソルと pointer-events を上書き */
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+

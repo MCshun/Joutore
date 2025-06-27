@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>上トレ！| 上昇トレンド判定</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="search.css">
+</head>
+<body>
+  <!-- ヘッダー（共通パーツを使っているならここに入れてもOK） -->
+  <!-- header.pugまたはindex.htmlに入れる -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+  <h2 class="page-title">【 トレンド銘柄一覧 】</h2>
+  <div class="filter-control">
+    <label for="searchInput">銘柄名で検索:</label>
+    <input type="text" id="searchInput" placeholder="例：仮天堂">
+
+    <label for="trendSelect">トレンド:</label>
+    <select id="trendSelect">
+      <option value="all">すべて</option>
+      <option value="up">上昇</option>
+      <option value="down">下降</option>
+      <option value="flat">横ばい</option>
+    </select>
+
+    <button id="sortToggle">スコア順に並び替え：⬇️ 降順</button>
+  </div>
+  <div id="notification" style="text-align: center; margin: 1em 0; font-weight: bold;"></div>
+  <div class="trend-table-wrapper">
+    
+    <table class="trend-table">
+      <thead>
+        <tr>
+          <th>銘柄</th>
+          <th>現在価格</th>
+          <th>スコア</th>
+          <th>トレンド</th>
+          <th>お気に入り</th>
+        </tr>
+      </thead>
+      <tbody id="trendTable"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <script src="trend-script.js"></script>
+  <script src="user-info.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+</html>

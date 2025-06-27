@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>上トレ！| Login</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="Login.css">
+</head>
+<body>
+  <div class="logo-center">
+    <a href="index.html">
+      <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img-large">
+    </a>
+  </div>
+
+
+  <!-- ✅ 追加：スタイルが効くようにdivで囲む -->
+  <div class="auth-wrapper">
+    <!-- ログインボックス -->
+    <div class="login-container">
+      <h1>Login</h1>
+      <div id="loginNotice" style="margin-bottom:1em; color:#d00;"></div>
+      <form id="loginForm">
+        <label>Email:</label>
+        <input type="email" id="email" required>
+        <label>Password:</label>
+        <input type="password" id="password" required>
+        <button type="submit">ログイン</button>
+      </form>
+
+      <!-- エラーメッセージ表示用 -->
+      <div id="loginResult" class="error-message"></div>
+
+      <div id="result"></div>
+    </div>
+
+    <!-- 新規登録ボックス -->
+    <div class="register-container">
+      <h2>新規登録はこちら</h2>
+      <p>まだアカウントをお持ちでない方は、こちらから登録してください。</p>
+      <a href="Sign up.html" class="register-button">新規登録</a>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+  
+  <script src="user-info.js"></script>
+  <script src="Login.js"></script>
+</body>
+</html>
+

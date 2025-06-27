@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上トレ！| チャート分析</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
+</head>
+<body>
+  <!-- ヘッダー（共通パーツを使っているならここに入れてもOK） -->
+  <!-- header.pugまたはindex.htmlに入れる -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+  <div class="container mt-4">
+    <h2 id="chartTitle">チャート分析（会社名）</h2>
+
+    <div class="chart-search">
+      <label for="autocompleteInput">銘柄検索：</label>
+      <input id="autocompleteInput" type="text" placeholder="銘柄名を入力" autocomplete="off">
+      <div id="suggestionList" class="suggestions"></div>
+    </div>
+
+    <h5>株価ローソク足チャート</h5>
+    <div class="chart-controls">
+      <label>表示期間：</label>
+      <label><input type="radio" name="range" value="1" checked>1ヶ月</label>
+      <label><input type="radio" name="range" value="3">3ヶ月</label>
+      <label><input type="radio" name="range" value="6">6ヶ月</label>
+      <label><input type="radio" name="range" value="12">12ヶ月</label>
+    </div>
+
+    <div class="chart-controls">
+      <label>グラフ：</label>
+      <label><input type="checkbox" id="smaToggle" checked> 移動平均線（SMA）</label>
+      <label><input type="checkbox" id="ichimokuToggle"> 一目均衡表</label>
+      <label><input type="checkbox" id="bbToggle"> ボリンジャーバンド</label>
+      <label><input type="checkbox" id="rsiToggle" checked> RSI</label>
+      <label><input type="checkbox" id="macdToggle" checked> MACD</label>
+      <label><input type="checkbox" id="volumeToggle" checked> 出来高</label>
+      <label><input type="checkbox" id="shortToggle" checked> 空売り残高</label>
+      <label><input type="checkbox" id="marginToggle" checked> 信用残高</label>
+    </div>
+
+
+    
+    <canvas id="candlestickChart" width="600" height="300"></canvas>
+
+    <h5>RSIチャート</h5>
+    <canvas id="rsiChart" width="600" height="150" style="margin-top: 10px;"></canvas>
+
+    <h5>MACDチャート</h5>
+    <canvas id="macdChart" width="600" height="150" style="margin-top: 10px;"></canvas>
+
+    <h5 class="mt-4">出来高（棒グラフ）</h5>
+    <canvas id="volumeChart" width="600" height="200"></canvas>
+
+    <h5 class="mt-4">空売り残高（棒グラフ）</h5>
+    <canvas id="shortSellingChart" width="600" height="200"></canvas>
+
+    <h5 class="mt-4">信用残高（棒グラフ）</h5>
+    <canvas id="marginBalanceChart" width="600" height="200"></canvas>
+
+  </div>
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <script src="chart-script.js"></script>
+  <script src="user-info.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+

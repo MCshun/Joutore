@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>上トレ！| 上昇トレンド銘柄分析アプリ</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="chat-widget.css">
+</head>
+<body>
+  <!-- header.pugまたはindex.htmlに入れる -->
+  <header class="top-bar">
+    <div class="logo-area">
+      <a href="index.html">
+        <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img">
+      </a>
+    </div>
+
+    <!-- ハンバーガーメニューアイコン -->
+    <button class="hamburger" id="hamburgerBtn">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">トップ</a>
+      <a href="search.html">銘柄一覧</a>
+      <a href="chart.html">チャート</a>
+      <span id="userArea"></span>
+    </nav>
+  </header>
+
+
+  <main>
+  <section id="favoritesSection">
+    <h2>あなたのお気に入り銘柄</h2>
+    <table id="favoritesTable" class="ranking-table">
+      <thead>
+        <tr>
+          <th>銘柄</th>
+          <th>現在価格</th>
+          <th>スコア</th>
+          <th>トレンド</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- JS で行を追加 -->
+      </tbody>
+    </table>
+    <p id="noFavoritesMessage" style="display:none; color:#888;">
+      お気に入り銘柄がありません。
+    </p>
+  </section>
+    <section class="ranking">
+      <h2>スコアランキングTOP3</h2>
+      <table class="ranking-table">
+        <thead>
+          <tr>
+            <th>順位</th>
+            <th>銘柄名</th>
+            <th>スコア</th>
+          </tr>
+        </thead>
+        <tbody id="rankingTable">
+          <!-- JSでデータ挿入 -->
+        </tbody>
+      </table>
+    </section>
+
+    <section class="features">
+      <h2>主な機能</h2>
+      <ul>
+        <li>✅ 上昇/下降トレンドのスコア表示</li>
+        <li>✅ MACD・RSI・一目均衡表などを用いた分析</li>
+        <li>✅ 銘柄名・トレンドによるフィルター検索</li>
+        <li>✅ 個別チャート画面へのリンク付き</li>
+      </ul>
+    </section>
+  </main>
+
+  <div id="chat-modal" class="hidden">
+    <div class="overlay"></div>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>サポートチャット</h2>
+        <button id="close-chat">&times;</button>
+      </div>
+      <div id="chat-window"></div>
+      <form id="chat-form">
+        <input id="chat-input" type="text" placeholder="質問を入力…" autocomplete="off" />
+        <button type="submit">送信</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <!-- 開くボタン -->
+  <button id="chat-toggle-btn" class="chat-toggle-btn">
+    💬
+  </button>
+
+  <!-- チャットコンテナ（最初は非表示）-->
+  <div id="chat-widget" class="chat-widget hidden">
+    <div class="chat-header">
+      <span>AIチャット</span>
+      <button id="chat-close-btn" class="chat-close-btn">✕</button>
+    </div>
+    <!-- 既存の chat.html を iframe で読み込む -->
+    <iframe
+      src="/chat.html"
+      frameborder="0"
+      class="chat-iframe"
+    ></iframe>
+  </div>
+  <!-- ────────────── チャットウィジェットここまで ────────────── -->
+
+  <script src="trend-script.js"></script>
+  <script src="chat-widget.js"></script>
+  <script src="user-info.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("navLinks");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    });
+  </script>
+    <!-- すでに貼ってある script の直後に追加 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // 0) trendResults を localStorage にセット
+      //    trend-script.js 側で定義されている ensureTrendResults() を呼び出す
+      if (typeof ensureTrendResults === 'function') {
+        await ensureTrendResults();
+      }
+
+      // 1) ユーザー情報取得
+      const user = JSON.parse(localStorage.getItem('loggedInUser') || '{}');
+      const userId = user.id;
+      if (!userId) return; // 未ログインなら何もしない
+
+      // 2) お気に入り銘柄を API から取得
+      let favorites = [];
+      try {
+        const res = await fetch(`/api/watchlist/${userId}`);
+        if (res.ok) favorites = await res.json();
+      } catch (e) {
+        console.error('お気に入り取得失敗', e);
+      }
+
+      // 3) お気に入りが空ならメッセージ表示
+      const noFavMsg = document.getElementById('noFavoritesMessage');
+      if (favorites.length === 0) {
+        noFavMsg.style.display = 'block';
+        return;
+      }
+      noFavMsg.style.display = 'none';
+
+      // 4) trendResults を localStorage から読み出し
+      let trendResults = [];
+      try {
+        trendResults = JSON.parse(localStorage.getItem('trendResults') || '[]');
+      } catch {}
+
+      // 5) テーブルに行を追加
+      const tbody = document.querySelector('#favoritesTable tbody');
+      tbody.innerHTML = '';  // クリア
+
+      favorites.forEach(fav => {
+        const info = trendResults.find(r => r.name === fav.symbol) || {};
+        const price = info.price != null ? info.price.toFixed(2) : '-';
+        const score = info.percent != null ? `${info.percent}点` : '-';
+        const trend = info.trendIcon || '-';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <a href="chart.html?symbol=${encodeURIComponent(fav.symbol)}">
+              ${fav.symbol}
+            </a>
+          </td>
+          <td>${price}</td>
+          <td>${score}</td>
+          <td>${trend}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    });
+    </script>
+
+    
+
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>上トレ！| Sign up</title>
+  <link rel="stylesheet" href="Login.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="logo-center">
+    <a href="index.html">
+      <img src="images/上トレ！.png" alt="上トレ！ロゴ" class="logo-img-large">
+    </a>
+  </div>
+
+
+  <!-- 中央寄せ -->
+  <div class="signup-wrapper">
+    <div class="signup-container">
+      <h1>新規登録</h1>
+      <form id="signupForm">
+        <label>ユーザー名:</label>
+        <input type="text" id="username" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Password:</label>
+        <input type="password" id="password" required>
+
+        <button type="submit">登録</button>
+      </form>
+      <div id="signupResult"></div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 上昇トレンド銘柄分析アプリ</p>
+  </footer>
+
+  <script src="user-info.js"></script>
+  <script src="signup.js"></script>
+</body>
+</html>
+
+
