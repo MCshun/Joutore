@@ -1,24 +1,24 @@
-const mysql = require('mysql2/promise'); // ← Promise対応のmysql2を使う
+require('dotenv').config();
 
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  password: '', // 必要に応じてパスワードを記入
-  database: 'kabu_app',
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+const mysql = require('mysql2');
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: true }
 });
 
-// ✅ 接続確認（オプション：起動時に1回だけ確認したい場合）
-pool.getConnection()
-  .then(() => {
-    console.log('✅ MySQLに接続成功');
-  })
-  .catch((err) => {
-    console.error('❌ MySQL接続失敗:', err);
-  });
+connection.connect((err) => {
+  if (err) {
+    console.error('DB接続エラー:', err);
+    return;
+  }
+  console.log('MySQL に接続成功！');
+});
 
-module.exports = pool;
+module.exports = connection;
+
 
 
